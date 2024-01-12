@@ -1,26 +1,36 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./Todo.css";
 
 function Todo() {
+  const [text, setText] = useState("");
+  const [items, setItems] = useState([]);
 
-    const [text, setText] = useState("")
+  function handleChange(event) {
+    let t = event.target.value;
+    setText(t);
+  }
 
-    function handleChange(event){
-        let t = event.target.value;
-        setText(t)
+  function addItem(event) {
+    event.preventDefault();
+    if (text) {
+      setItems([...items, text]);
+      setText("");
     }
-    
+  }
+
   return (
     <div className="container">
       <h1>Todo</h1>
       <form>
-        <input type="text" onChange={handleChange}></input>
-        <button>Add</button> 
-        </form>
+        <input type="text" onChange={handleChange} value={text}></input>
+        <button onClick={addItem}>Add</button>
+      </form>
 
-        <ul>
-            <li>{text}</li>
-        </ul>
+      <ul>
+        {items.map((item) => (
+          <li>{item}</li>
+        ))}
+      </ul>
     </div>
   );
 }
